@@ -13,9 +13,9 @@ const people = new ServicesApi()
 people.getAllPeople()
 
 root.render(
-  <React.StrictMode>
+
 <App/>
-  </React.StrictMode>
+
 );
 
 

@@ -38,8 +38,8 @@ class ServicesApi {
         return url.match(regExp)[1]
     }
 _transformPlanetData(response){
-        this._extractId()
         return{
+            id:this._extractId(response.url),
             name:response.name,
             population:response.population,
            diameter:response.diameter,
