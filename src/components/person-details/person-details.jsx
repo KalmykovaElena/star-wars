@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 
 class PersonDetails extends Component {
-    render() {
 
+    render() {
+        console.log(this.props.selecteditem)
         return (
             <div>
                 <img className={'img-thumbnail planet-image float-start'}

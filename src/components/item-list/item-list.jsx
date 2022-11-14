@@ -23,7 +23,7 @@ class ItemList extends Component {
         return peopleList.map(({id, name}) => (
                 <li className={'list-group-item'}
                     key={id}
-
+onClick={()=>this.props.selectedItem(id)}
                 > {name}</li>
             )
         )
@@ -47,7 +47,6 @@ return<Error/>
         return (
             <div>
                 <ul className='list-group'>
-                    <li className="list-group-item" >Item</li>
                     {items}
                 </ul>
             </div>
