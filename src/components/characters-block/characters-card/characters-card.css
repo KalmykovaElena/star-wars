@@ -1,0 +1,12 @@
+.characters-card{
+    width: 50%;
+    display: flex;
+}
+.characters-card img{
+    width: 40%;
+}
+.characters-card-info li{
+  list-style: none;
+    padding: 10px ;
+    border-bottom: 1px solid gray;
+}
