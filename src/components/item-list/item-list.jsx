@@ -6,28 +6,33 @@ import Error from "../error";
 class ItemList extends Component {
     services = new servicesApi()
     state = {
-        peopleList: null
+        peopleList: null,
+        itemList: null,
+        hasError: false
     }
 
     componentDidMount() {
-        this.services.getAllPeople()
-            .then(peopleList => {
-                this.setState({
-                    peopleList
-                })
-            })
 
-    }
+                const {getData} = this.props
 
-    renderItems(peopleList) {
-        return peopleList.map(({id, name}) => (
-                <li className={'list-group-item'}
-                    key={id}
-onClick={()=>this.props.selectedItem(id)}
-                > {name}</li>
-            )
-        )
 
+                getData()
+                    .then(itemList => {
+                        this.setState({
+
+                            itemList
+                        })
+                    })
+            }
+
+    renderItems(itemList) {
+        return itemList.map((item) => {
+            const label = this.props.renderList(item)
+            return (<li onClick={()=>{
+                this.props.getPersonId(item.id)
+            }} className='list-group-item' key={item.id}>
+                {label}
+            </li>)})
     }
     static getDerivedStateFromError(error){
         return {hasError: true}
@@ -36,14 +41,14 @@ onClick={()=>this.props.selectedItem(id)}
     }
 
     render() {
-        const {peopleList,hasError} = this.state
-        if (!peopleList) {
+        const {itemList, hasError} = this.state
+        if (!itemList) {
             return <Spinner/>
         }
         if(hasError){
 return<Error/>
         }
-        const items = this.renderItems(peopleList)
+        const items = this.renderItems(itemList)
         return (
             <div>
                 <ul className='list-group'>
