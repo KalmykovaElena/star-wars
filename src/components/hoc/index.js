@@ -1,2 +1,5 @@
 import {WithDataHoc} from './with-data-hoc'
-export {WithDataHoc}
+import {WithChildFunctionHoc}  from './with-child-function-hoc'
+
+export {WithDataHoc, WithChildFunctionHoc}
+
