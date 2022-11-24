@@ -5,6 +5,7 @@ import ItemList from "../item-list";
 import ServicesApi from "../../services-api";
 import Record from "../common/record";
 import ErrorBoundary from "../error-boundary";
+import Row from "../common/row";
 
 
 class PeoplePage extends Component {
@@ -20,28 +21,26 @@ class PeoplePage extends Component {
 
     render() {
         const {getAllPeople, getPeople, getPersonImage} = this.services
-const itemList =(
-    <ItemList getPersonId={this.getPersonId}
-              getData={getAllPeople}
-              renderList={(item) => `${item.name}`}
-    >
-        {
-            (item) => <span> {item.name}</span>
-        }
-    </ItemList>
-)
-const itemDetails=(
-    <ItemDetails selectedItem={this.state.personId}
-                 getData={getPeople}
-                 getData={getPersonImage}
-    >
-        <Record label='Eye color:' value='eyeColor'/>
-        <Record label='BY:' value='birthYear'/>
-        <Record label='Gender:' value='gender'/>
-    </ItemDetails>
-)
+        const itemList = <ItemList getPersonId={this.getPersonId}
+                                   getData={getAllPeople}
+        >
+            {
+                (item) => <span> {item.name}</span>
+            }
+        </ItemList>
+
+        const itemDetails = (
+            <ItemDetails selectedItem={this.state.personId}
+                         getData={getPeople}
+                         getData={getPersonImage}
+            >
+                <Record label='Eye color:' value='eyeColor'/>
+                <Record label='BY:' value='birthYear'/>
+                <Record label='Gender:' value='gender'/>
+            </ItemDetails>
+        )
         return (<ErrorBoundary>
-           <Row left={itemlist} right={itemDetails}/>
+                <Row left={itemList} right={itemDetails}/>
             </ErrorBoundary>
         );
     }

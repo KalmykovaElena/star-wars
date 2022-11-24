@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import servicesApi from "../../services-api";
 import {WithDataHoc} from '../hoc'
-import Error from "../error";
+
 
 class ItemList extends Component {
-    services = new servicesApi()
+
 
 
     renderItems(itemList) {
         return itemList.map((item) => {
-            // const label = this.props.children(item)
-            return (<li onClick={()=>{
+            const label = this.props.children(item)
+            return (<li className='list-group-item' onClick={()=>{
                 this.props.getPersonId(item.id)
-            }} className='list-group-item' key={item.id}>
-                label
+            }}  key={item.id}>
+                {label}
             </li>)})
     }
 
@@ -32,4 +31,4 @@ class ItemList extends Component {
     }
 }
 
-export default WithDataHoc (ItemList);
+export default WithDataHoc(ItemList);

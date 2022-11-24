@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import {logDOM} from "@testing-library/react";
 import Spinner from "../spinner";
 
-const WithDataHoc = (vewComponent) => {
+const WithDataHoc = (ViewComponent) => {
     return class extends Component{
         state = {
          data: null,
         }
         componentDidMount() {
-
             const {getData} = this.props
 
 
@@ -23,8 +21,10 @@ const WithDataHoc = (vewComponent) => {
 render(){
             const {data}=this.state
     if (!data){
+        console.log('noData')
         return <Spinner/>
     }
+    console.log('isData')
     return <ViewComponent {...this.props} data={data}/>
 }
 
