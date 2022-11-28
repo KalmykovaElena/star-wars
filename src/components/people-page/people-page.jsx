@@ -32,7 +32,7 @@ class PeoplePage extends Component {
         const itemDetails = (
             <ItemDetails selectedItem={this.state.personId}
                          getData={getPeople}
-                         // getData={getPersonImage}
+                         getImageUrl={getPersonImage}
             >
                 <Record label='Eye color:' value='eyeColor'/>
                 <Record label='BY:' value='birthYear'/>

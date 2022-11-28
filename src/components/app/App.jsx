@@ -31,7 +31,7 @@ class App extends React.Component {
                 {/*<HeroesBlock/>*/}
                 {/*<PeoplePage/>*/}
                     <Row left={<PersonList getPersonId={this.getPersonId}/>}
-                    right = {<PersonDetails personId={this.state.personId}/>}
+                    right = {<PersonDetails selectedItem={this.state.personId}/>}
                     />
 
 

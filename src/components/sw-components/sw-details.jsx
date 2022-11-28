@@ -2,13 +2,13 @@ import ItemDetails from "../item-details";
 import Record from "../common/record";
 import React from "react";
 import {ServiceConsumer} from "../context";
-const PersonDetails =(personId)=>{
+const PersonDetails =({selectedItem})=>{
     return (
         <ServiceConsumer>
             {
                 ({getPeople,getPersonImage})=>{
                     return(
-                        <ItemDetails selectedItem={personId}
+                        <ItemDetails selectedItem={selectedItem}
                                      getData={getPeople}
                                      getImageUrl={getPersonImage}
                         >

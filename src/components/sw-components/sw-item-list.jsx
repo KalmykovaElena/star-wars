@@ -7,9 +7,10 @@ const services = new ServicesApi()
 const {
     getAllPeople,
     getAllPlanets,
-    getAllStarShip
+    getAllStarships
 } = services
 const renderName = (item) => <span> {item.name}</span>
+const renderNameAndModel =({name, model})=> <span> {name} ({model})</span>
 
 // созд хок, кот возвр комп-т кот принимает и в кач чилдренов возвр переданную ф-ю
 
@@ -21,8 +22,9 @@ const PlanetList = WithDataHoc(
     WithChildFunctionHoc(ItemList, renderName),
     getAllPlanets)
 
-const StarshipList = () => {
-}
+const StarshipList = WithDataHoc(
+    WithChildFunctionHoc(ItemList, renderNameAndModel),
+    getAllStarships)
 
 
 export {

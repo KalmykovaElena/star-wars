@@ -51,8 +51,8 @@ class ItemDetails extends Component {
 
             <div>
                 <img className={'img-thumbnail planet-image float-start'}
-                     src={image} alt=""/>
-                <h4>{name}</h4>
+                     src={this.props.getImageUrl(item)} alt=""/>
+                <h4>{item.name}</h4>
                 <ul className={'list-group list-group-flush detail'}>
                     {
                         React.Children.map(this.props.children, (child, index) => {
