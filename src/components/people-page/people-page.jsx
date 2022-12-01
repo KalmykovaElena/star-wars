@@ -1,50 +1,52 @@
-import React, {Component} from "react";
-import './people-page.css'
+import React, {Component} from 'react';
 import ItemDetails from "../item-details";
 import ItemList from "../common/item-list";
 import ServicesApi from "../../services-api";
-import Record from "../common/record";
 import ErrorBoundary from "../error-boundary";
+import Record from "../common/record";
 import Row from "../common/row";
-
+import ErrorButton from "../error-button";
 
 class PeoplePage extends Component {
+
     services = new ServicesApi()
+
     state = {
-        personId: null
+        selectedItem: null
     }
-    getPersonId = (id) => {
-        this.setState({
-            personId: id
-        })
+
+    onItemSelected = (selectedItem) => {
+        this.setState({selectedItem})
     }
+
 
     render() {
-        const {getAllPeople, getPeople, getPersonImage} = this.services
-        const itemList = <ItemList getPersonId={this.getPersonId}
-                                   getData={getAllPeople}
-        >
-            {
-                (item) => <span> {item.name}</span>
-            }
-        </ItemList>
+        const {selectedItem} = this.state
+        const {getAllPeople, getPerson, getPersonImage} = this.services
 
-        const itemDetails = (
-            <ItemDetails selectedItem={this.state.personId}
-                         getData={getPeople}
-                         getImageUrl={getPersonImage}
+        const itemList = (<ItemList
+            onItemSelected={this.onItemSelected}
+            getData={getAllPeople}
+        >
+            {(item) => <span>{item.name}</span>}
+        </ItemList>)
+
+        const itemDetails = (<ItemDetails selectedItem={selectedItem}
+                                          getData={getPerson}
+                                          getImageUrl={getPersonImage}
             >
-                <Record label='Eye color:' value='eyeColor'/>
-                <Record label='BY:' value='birthYear'/>
                 <Record label='Gender:' value='gender'/>
+                <Record label='Birth Year:' value='birthYear'/>
+                <Record label='Eye Color:' value='eyeColor'/>
             </ItemDetails>
         )
-        return (<ErrorBoundary>
+
+        return (
+            <ErrorBoundary>
                 <Row left={itemList} right={itemDetails}/>
             </ErrorBoundary>
         );
     }
 }
-
 
 export default PeoplePage;

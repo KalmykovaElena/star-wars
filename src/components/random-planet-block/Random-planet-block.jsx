@@ -1,45 +1,43 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './random-planet-block.css'
 import servicesApi from "../../services-api";
-import Spinner from "../spinner/spinner";
+import Spinner from "../spinner";
 import Error from "../error";
 
-class RandomPlanetBlock extends React.Component {
+class RandomPlanetBlock extends Component {
     services = new servicesApi()
+
     state = {
         planet: {},
-        isLoading:true,
-        hasError:false
+        isLoading: true,
+        hasError: false,
     }
 
-    // constructor(props) {
-    //     super(props);
-    //
-    // }
-componentDidMount() {
-    this.fetchPlanet()
-    this.intervalId=setInterval(this.fetchPlanet, 5000)
-}
+    componentDidMount() {
+        this.fetchPlanet()
+        this.intervalId = setInterval(this.fetchPlanet, 150000)
+    }
 
     componentWillUnmount() {
- clearInterval(this.intervalId)
+        clearInterval(this.intervalId)
     }
 
     setPlanet = (planet) => {
         this.setState({
             planet,
-            isLoading:false,
-            hasError:false
+            isLoading: false,
+            hasError: false,
         })
     }
-    setError=(error)=>{
-        this.setState({
-            hasError:true,
-            isLoading:false
-        })
-    }
-    fetchPlanet = () => {
 
+    setError = (error) => {
+        this.setState({
+            hasError: true,
+            isLoading: false
+        })
+    }
+
+    fetchPlanet = () => {
         const id = Math.floor(Math.random() * 17) + 2
         this.services.getPlanet(id)
             .then(this.setPlanet)
@@ -47,46 +45,50 @@ componentDidMount() {
     }
 
     render() {
-        const {planet,isLoading,hasError} = this.state
-        const spinner = isLoading &&<Spinner/>
+        const {planet, isLoading, hasError} = this.state
+
+        const spinner = isLoading && <Spinner/>
         const error = hasError && <Error/>
-        const content =!(isLoading || hasError) && <RandomPlanet planet={planet}/>
+        const content = !(isLoading || hasError) && <RandomPlanet planet={planet}/>
+
         return (
-            <div className={`container`}>
-                 {spinner}
-                {error}
+            <div className='container'>
+                {spinner}
                 {content}
-    </div>
+                {error}
+            </div>
         );
     }
+
+
 };
-const RandomPlanet=({planet}) =>{
-    const {name, population, diameter, rotation_period, id} = planet
 
-    return(
-        <div className={`random-planet-block`}>
+const RandomPlanet = ({planet}) => {
+    const {name, population, diameter, rotationPeriod, id} = planet
 
-            <div className={'picture-container'}>
-                <img className={'img-thumbnail planet-image float-start'}
-                     src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
-                     alt=""/>
-            </div>
+    return (
+        <div className=' random-planet-block'>
+            <img className='rounded float-start planet'
+                 src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+                 alt=""/>
             <h4>{name}</h4>
-            <ul className={'list-group list-group-flush detail'}>
-                <li className={'list-group-item'}>
-                    <span className={'tern'}>Population</span>
+            <ul className='list-group list-group-flush detail'>
+                <li className='list-group-item'>
+                    <span className='term'>Population:</span>
                     <span>{population}</span>
                 </li>
-                <li className={'list-group-item'}>
-                    <span className={'tern'}>Rotation Period:</span>
-                    <span>{rotation_period}</span>
+                <li className='list-group-item'>
+                    <span className='term'>Rotation Period:</span>
+                    <span>{rotationPeriod}</span>
                 </li>
-                <li className={'list-group-item'}>
-                    <span className={'tern'}>Diameter</span>
+                <li className='list-group-item'>
+                    <span className='term'>Diameter:</span>
                     <span>{diameter}</span>
                 </li>
             </ul>
         </div>
     )
 }
+
+
 export default RandomPlanetBlock;

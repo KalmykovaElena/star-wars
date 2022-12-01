@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
-import ServicesApi from "../../services-api";
 
 class ItemDetails extends Component {
 
-    services = new ServicesApi()
     state = {
         item: null,
-        image: null
+        image: null,
     }
 
     componentDidMount() {
-
+        this.updateItem()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState, s) {
         if (this.props.selectedItem !== prevProps.selectedItem) {
             this.updateItem()
         }
@@ -26,41 +24,35 @@ class ItemDetails extends Component {
             .then(item => {
                 this.setState({
                     item,
-                    image: this.services.getPersonImage(item)
+                    image: getImageUrl(item)
                 })
-
             })
     }
+
 
     render() {
         const {item, image} = this.state
 
         if (!item) {
-            return <span> выберите элемент</span>
+            return <span>Выберите элемент из списка!</span>
         }
 
-        const {name, gender, birthYear, eyeColor} = this.state.item
-        const list = this.props.fields.map((config) => {
-            return <li className="list-group-item">
-                <span className="term">{config.label}</span>
-                <span>{item[config.value]}</span>
-            </li>
-        })
+        const {name, birthYear, eyeColor, gender} = item
+
 
         return (
-
             <div>
-                <img className={'img-thumbnail planet-image float-start'}
-                     src={this.props.getImageUrl(item)} alt=""/>
-                <h4>{item.name}</h4>
-                <ul className={'list-group list-group-flush detail'}>
+                <img className='rounded float-start planet'
+                     src={image}
+                     alt=""/>
+                <h4>{name}</h4>
+                <ul className='list-group list-group-flush detail'>
                     {
                         React.Children.map(this.props.children, (child, index) => {
-                            return React.cloneElement(child,{item})
+                            return React.cloneElement(child, {item})
                         })
                     }
                 </ul>
-
             </div>
         );
     }

@@ -1,45 +1,29 @@
-import React from 'react';
-import Header from "../header/Header";
-import RandomPlanetBlock from "../random-planet-block";
-
-import PeoplePage from "../people-page";
+import React, {Component} from 'react'
 import ServicesApi from "../../services-api";
-import ItemList from "../common/item-list";
+import RandomPlanetBlock from "../random-planet-block";
+import Header from "../header";
 import ErrorBoundary from "../error-boundary";
-import {PersonDetails, PersonList, PlanetList} from "../sw-components";
-import {ServiceProvider} from "../context";
-import Row from "../common/row";
+import {ServiceProvider} from '../context'
+import {PeoplePage, PlanetsPage, StarshipsPage} from "../pages";
 
-class App extends React.Component {
+class App extends Component {
+
     services = new ServicesApi()
 
-    state = {
-        personId: null
-    }
-
-    getPersonId = (id) => {
-        this.setState({
-            personId: id
-        })
-    }
-
     render() {
-        return (<ErrorBoundary>
+        return (
+            <ErrorBoundary>
                 <ServiceProvider value={this.services}>
-                <Header/>
-                <RandomPlanetBlock/>
-                {/*<HeroesBlock/>*/}
-                {/*<PeoplePage/>*/}
-                    <Row left={<PersonList getPersonId={this.getPersonId}/>}
-                    right = {<PersonDetails selectedItem={this.state.personId}/>}
-                    />
-
-
+                    <Header/>
+                    <RandomPlanetBlock/>
+                    <PeoplePage/>
+                    <PlanetsPage/>
+                    <StarshipsPage/>
                 </ServiceProvider>
             </ErrorBoundary>
-
         )
     }
-};
 
-export default App;
+}
+
+export default App
