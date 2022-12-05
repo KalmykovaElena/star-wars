@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import Spinner from "../spinner";
 
-const WithDataHoc = (ViewComponent, getData) => {
+export const WithDataHoc = (ViewComponent) => {
     return class extends Component {
         state = {
             data: null,
         }
+
         componentDidMount() {
+            const {getData} = this.props
             getData()
                 .then(data => {
                     this.setState({data})
@@ -16,12 +18,13 @@ const WithDataHoc = (ViewComponent, getData) => {
 
         render() {
             const {data} = this.state
+
             if (!data) {
                 return <Spinner/>
             }
-            return <ViewComponent {...this.props} data={data}/>
+
+            return <ViewComponent  {...this.props} data={data}/>
+
         }
     }
 };
-
-export {WithDataHoc};

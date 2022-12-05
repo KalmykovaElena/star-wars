@@ -1,1 +1,1 @@
-export {default} from './app.css'
+export {default} from './app'

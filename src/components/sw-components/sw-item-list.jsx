@@ -1,30 +1,40 @@
 import React from "react";
 import ItemList from "../common/item-list";
-import {WithChildFunctionHoc, WithDataHoc} from "../hoc";
-import ServicesApi from "../../services-api";
+import {compose, WithChildFunctionHoc, WithDataHoc, WithServicesHoc} from "../hoc";
 
-const services = new ServicesApi()
-const {
-    getAllPeople,
-    getAllPlanets,
-    getAllStarships
-} = services
-const renderName = (item) => <span> {item.name}</span>
-const renderNameAndModel =({name, model})=> <span> {name} ({model})</span>
+const mapPersonListMethodToProps = (service) => ({
+    getData: service.getAllPeople,
+})
 
-// созд хок, кот возвр комп-т кот принимает и в кач чилдренов возвр переданную ф-ю
+const mapPlanetsListMethodToProps = (service) => ({
+    getData: service.getAllPlanets,
+})
 
-const PersonList = WithDataHoc(
-    WithChildFunctionHoc(ItemList, renderName),
-    getAllPeople)
+const mapStarshipListMethodToProps = (service) => ({
+    getData: service.getAllStarShips,
+})
 
-const PlanetList = WithDataHoc(
-    WithChildFunctionHoc(ItemList, renderName),
-    getAllPlanets)
+const renderName = (item) => <span>{item.name}</span>
+const renderNameAndModel = ({name, model}) => <span>{name} ({model})}</span>
 
-const StarshipList = WithDataHoc(
-    WithChildFunctionHoc(ItemList, renderNameAndModel),
-    getAllStarships)
+const PersonList = compose(
+    WithServicesHoc(mapPersonListMethodToProps),
+    WithDataHoc,
+    WithChildFunctionHoc(renderName)
+)(ItemList)
+
+
+const PlanetList = compose(
+    WithServicesHoc(mapPlanetsListMethodToProps),
+    WithDataHoc,
+    WithChildFunctionHoc(renderName),
+)(ItemList)
+
+const StarshipList = compose(
+    WithServicesHoc(mapStarshipListMethodToProps),
+    WithDataHoc,
+    WithChildFunctionHoc(renderNameAndModel),
+)(ItemList)
 
 
 export {

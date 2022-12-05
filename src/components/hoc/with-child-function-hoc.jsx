@@ -1,12 +1,12 @@
 import React from "react";
 
-const WithChildFunctionHoc = (Wrapper, fn) => {
+export const WithChildFunctionHoc = (fn) => (Wrapped) => {
     return (props) => {
         return (
-            <Wrapper {...props}>
+            <Wrapped {...props}>
                 {fn}
-            </Wrapper>
+            </Wrapped>
         )
     }
 }
-export {WithChildFunctionHoc}
+

@@ -1,13 +1,25 @@
-.picture-container{
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.random-planet-block {
+    width: 100%;
+    align-self: start;
 }
-.planet-image{
-    width: 200px;
+
+.planet {
+    width: 150px;
+    height: 150px;
     margin-right: 20px;
+    margin-left: 20px;
 }
-.detail{
+
+.detail {
     width: 400px;
 }
-.tern{
+
+.term {
     margin-right: 15px;
 }
